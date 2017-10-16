@@ -4,14 +4,22 @@
     <form action="">
       <div class="form-group">
         <label for="">Title</label>
-        <input type="text" placeholder="Title goes here" v-model="newArticle">
+        <input type="text" placeholder="Title goes here" v-model="title">
+      </div>
+      <div class="form-group">
+        <label for="">Body</label>
+        <textarea rows="7" type="text" placeholder="Body goes here" v-model="body"></textarea>
       </div>
       <div class="form-group">
         <input @click="addArticle"type="submit" value="Submit">
       </div>
     </form>
-    <ul>
-      <li v-for="post in posts" v-text="post"></li>
+    <ul class="posts">
+      <li v-for="post in posts">
+        <p><strong v-text="post.title"></strong></p>
+        <small>published by admin on 16/10/2017</small>
+        <p v-text="post.body"></p>
+      </li>
     </ul>
 
     <hr>
@@ -34,17 +42,25 @@ export default {
   data () {
     return {
       msg: 'Welcome to Your Vue.js PWA',
-      newArticle: '',
+      title: '',
+      body: '',
       posts: [
-        'Post #1',
-        'Post #2'
+        {
+          title: 'Post #1',
+          body: 'Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Pellentesque in ipsum id orci porta dapibus. Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec velit neque, auctor sit amet aliquam vel, ullamcorper sit amet ligula. Praesent sapien massa, convallis a pellentesque nec, egestas non nisi. Donec sollicitudin molestie malesuada.'
+        }
       ],
       pokes: []
     }
   },
   methods: {
     addArticle () {
-      this.posts.push(this.newArticle)
+      this.posts.push(
+        {
+          title: this.title,
+          body: this.body
+        }
+      )
       this.newArticle = ''
     },
     showAll () {
@@ -63,6 +79,9 @@ export default {
           console.log('ERROR!')
           console.log(error)
         })
+    },
+    date () {
+      return console.log('test')
     }
   }
 }
@@ -81,6 +100,10 @@ export default {
 	li {
 		margin: 0 10px;
 	}
+  ul.posts li {
+    padding: 16px 0;
+    border-bottom: 1px solid #eee;
+  }
   ul.pokes {
     display: flex;
     flex-direction: row;
@@ -115,9 +138,17 @@ form textarea {
 }
 form input[type="submit"],
 button {
+  color: white;
   width: 100%;
   max-width: 300px;
   border: none;
   padding: 8px 16px;
+  background-color: #35495E;
+}
+form input[type="submit"]:hover,
+button:hover {
+  transition: cubic-bezier(0.075, 0.82, 0.165, 1);
+  background-color: #2c3e50;
+  cursor: pointer;
 }
 </style>

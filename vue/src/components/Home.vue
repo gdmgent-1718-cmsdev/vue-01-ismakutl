@@ -11,7 +11,7 @@
         <textarea rows="7" type="text" placeholder="Body goes here" v-model="body"></textarea>
       </div>
       <div class="form-group">
-        <input @click="addArticle"type="submit" value="Submit">
+        <input @click="postArticle" type="submit" value="Submit">
       </div>
     </form>
     <ul class="posts">
@@ -54,14 +54,27 @@ export default {
     }
   },
   methods: {
-    addArticle () {
-      this.posts.push(
-        {
-          title: this.title,
-          body: this.body
+    postArticle () {
+      axios({
+        method: 'post',
+        // url: 'http://cmsdev.localhost/node/',
+        baseURL: 'http://cmsdev.localhost/node/',
+        headers: {
+          'Accept': 'application/hal+json',
+          'Content-Type': 'application/hal+json',
+          'X-CSRF-Token': 'CI2uo7FfX7SQ1qv4BBIUOuPxpr9aLcIbGWdQtASy-48'
+        },
+        auth: {
+          username: 'cmsdev-user',
+          password: 'cmsdev-pass'
         }
-      )
-      this.newArticle = ''
+      })
+      .then(function (response) {
+        console.log(response)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
     },
     showAll () {
       let that = this
@@ -92,6 +105,12 @@ export default {
 	h1, h2 {
 		font-weight: normal;
 	}
+
+  .articles {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+  }
 
 	ul {
 		padding: 0;

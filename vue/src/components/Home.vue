@@ -57,8 +57,8 @@ export default {
     postArticle () {
       axios({
         method: 'post',
-        // url: 'http://cmsdev.localhost/node/',
-        baseURL: 'http://cmsdev.localhost/node/',
+        url: 'http://cmsdev.localhost/node/',
+        // baseURL: 'http://cmsdev.localhost/node/',
         headers: {
           'Accept': 'application/hal+json',
           'Content-Type': 'application/hal+json',
@@ -67,6 +67,19 @@ export default {
         auth: {
           username: 'cmsdev-user',
           password: 'cmsdev-pass'
+        },
+        body: {
+          '_links': {
+            'type': {
+              'href': 'http://cmsdev.localhost/rest/type/node/article'
+            }
+          },
+          'title': {
+            'value': 'Drupal Post!'
+          },
+          'type': {
+            'target_id': 'article'
+          }
         }
       })
       .then(function (response) {

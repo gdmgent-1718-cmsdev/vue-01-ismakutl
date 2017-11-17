@@ -55,20 +55,8 @@ export default {
   },
   methods: {
     postArticle () {
-      axios({
-        method: 'post',
-        url: 'http://cmsdev.localhost/node/',
-        // baseURL: 'http://cmsdev.localhost/node/',
-        headers: {
-          'Accept': 'application/hal+json',
-          'Content-Type': 'application/hal+json',
-          'X-CSRF-Token': 'CI2uo7FfX7SQ1qv4BBIUOuPxpr9aLcIbGWdQtASy-48'
-        },
-        auth: {
-          username: 'cmsdev-user',
-          password: 'cmsdev-pass'
-        },
-        body: {
+      axios.post('http://cmsdev.localhost/node/',
+        {
           '_links': {
             'type': {
               'href': 'http://cmsdev.localhost/rest/type/node/article'
@@ -80,14 +68,54 @@ export default {
           'type': {
             'target_id': 'article'
           }
+        }, {
+          headers: {
+            'Accept': 'application/hal+json',
+            'Content-Type': 'application/hal+json',
+            'X-CSRF-Token': 'iKnpqGkq9jNSmZu-MxkAMxu_zYTJbN6bys1eL4uiBoA',
+            'Authorization': 'basic Y21zZGV2LXVzZXI6Y21zZGV2LXBhc3M='
+          }
         }
+      )
+      .then(() => {
+        console.log('Posted!')
       })
-      .then(function (response) {
-        console.log(response)
+      .catch(() => {
+        console.log('Failed!')
       })
-      .catch(function (error) {
-        console.log(error)
-      })
+    //   axios({
+    //     method: 'post',
+    //     url: 'http://cmsdev.localhost/node/',
+    //     // baseURL: 'http://cmsdev.localhost/node/',
+    //     headers: {
+    //       'Accept': 'application/hal+json',
+    //       'Content-Type': 'application/hal+json',
+    //       'X-CSRF-Token': 'CI2uo7FfX7SQ1qv4BBIUOuPxpr9aLcIbGWdQtASy-48'
+    //     },
+    //     auth: {
+    //       username: 'cmsdev-user',
+    //       password: 'cmsdev-pass'
+    //     },
+    //     body: {
+    //       '_links': {
+    //         'type': {
+    //           'href': 'http://cmsdev.localhost/rest/type/node/article'
+    //         }
+    //       },
+    //       'title': {
+    //         'value': 'Drupal Post!'
+    //       },
+    //       'type': {
+    //         'target_id': 'article'
+    //       }
+    //     }
+    //   })
+    //   .then(function (response) {
+    //     console.log(response)
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error)
+    //   })
     },
     showAll () {
       let that = this
